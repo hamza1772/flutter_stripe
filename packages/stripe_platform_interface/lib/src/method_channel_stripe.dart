@@ -209,7 +209,10 @@ class MethodChannelStripe extends StripePlatform {
       _addListenerForDeffered();
       _confirmHandler = params.intentConfiguration?.confirmHandler;
     }
-    if (result is List) {
+    // iOS workaround for no paymentOptions
+    if (result['paymentOption'] == null) {
+      return null; // just return null
+    } else if (result is List) {
       return null;
     } else {
       return _parsePaymentSheetResult(result);
